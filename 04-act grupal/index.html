@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UNIR :: Herramientas de Visualización</title>
+    <title> Análisis de tendencia de la población España</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -12,33 +12,72 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/styles.css" />
-  </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/dropdown.js"></script>
+
+</head>
   <body>
     <header>
       <nav class="navbar navbar-light bg-light shadow">
         <div class="container">
-          <a href="/" class="navbar navbar-brand"> HeVi </a>
-          <img src="img/unir.png" height="65" />
-          <img src="img/yo.png" height="40" class="rounded-circle" />
+          <a class ="navbar navbar-brand"> Análisis de la población Española</a>
+          <img src="img/españa.jpg" height="40" class="rounded-circle" />
         </div>
       </nav>
     </header>
-    <main class="container">
-      <h2>Evolución de la población en España</h2>
-      <div id="test">
-        <h1>Tendencia de evolución</h1>
-        <style>
-          .line {
-            fill: none;
-            stroke: steelblue;
-            stroke-width: 2px;
-          }
-        </style>
-      </div>
-      <div id="graf">
-        <h1>Tendencia de evolución</h1>
+    <main class="container mt-4">
+
+      <div>
+        <h1>Bienvenido</h1>
+        <br>
+        <p>El siguiente dashbord muestra algunos gráficos para el análisis de la población en el país de España</p>
+        <p>A continuación selecciona la opción deseada a visualizar</p>
       </div>
 
+</div>
+      <div>
+        <select class="form-select form-select-lg mb-3"  aria-label=".form-select-lg example" id="skill_dropdown" 
+         style="height: 50px;" onchange="showDiv(this)">
+          <option value="barra">Variación de la población</option>
+          <option value="linea">Tendencia de la población</option>
+        </select>
+    </div>
+
+    <div id="linea_div" style="display:none;">
+      <div class="row">
+        <div class="col">
+          <div id="graf_linea" width="100%"></div>
+        </div>
+        <div class="col">
+          <h2>Tendencia evolución</h2>
+          <p>
+            El gráfico expuesto muestra la evolución de las personas residentes en España (millones).
+            <br><br>
+            En conclusión, las habitantes residentes en españa han ido de forma incremental desde el año 2002 y se mantuvo en tendencia hasta el año 2019.
+            Posterior a este momento en el tiempo, la población continuo de forma creciendo.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="barra_div" style="display:block;">
+      <div class="row">
+        <div class="col">
+          <h2>Variación</h2>
+          <p>
+            Como se puede apreciar en el gráfico, la variación de la población iba de forma incremental hasta el año 2021, donde una terrible "caída" en los datos afectó considerablemente la población en aquel año. Ya en el año actual (2022) parece que la tendencia comienza a incrementar.
+            <br><br>            
+            Con esto, habrá que indagar y considerar distintos factores que afectaron a la variación para el año 2021, uno de los principales sin duda sería el tema de la pandemia por el virus COVID-19
+          </p>
+        </div>
+
+        <div class="col">
+          <div id="graf_barra" width="100%"></div>
+        </div>
+      </div>
+    </div>
+      <br>
     </main>
     <footer>
       <div class="container"><span></span></div>
@@ -60,7 +99,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="js/app copy.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/grafico_barras.js"></script>
+    <script src="js/grafico_linea.js"></script>
   </body>
 </html>

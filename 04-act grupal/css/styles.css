@@ -17,10 +17,8 @@
   font-weight: bold;
 }
 
-.xGrids {
-  stroke: lightgray;
-}
-
-.yGrids {
-  stroke: lightgray;
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
 }
