@@ -24,3 +24,8 @@
 .yGrids {
   stroke: lightgray;
 }
+
+.graf2 {
+  background-color: #b8b82b;
+  border: 1px solid #d6ccc2;
+}
