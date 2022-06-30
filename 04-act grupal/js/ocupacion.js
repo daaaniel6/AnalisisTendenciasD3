@@ -1,113 +1,105 @@
-// const draw = async (el) => {
+// Se selecciona la variable a utilizar
+const graf2 = d3.select("#graf2")
 
-//     const graf = d3.select(el)
-
-// const anchoTotalD = +graf.style("width").slice(0, -2) 
-// const altoTotalD = anchoTotalD * 0.5
-
-// const margen = { arriba: 58, derecha: 10, abajo: 95, izquierda: 98 }
-
-// const anchoD = anchoTotalD - margen.izquierda - margen.derecha 
-// const altoD = altoTotalD - margen.arriba - margen.abajo
+//Se establecen los margenes 
+const margenesOcupacion = {
+    top: 50,
+    right: 20,
+    bottom: 70,
+    left: 105,
+}
 
 
-// const svg = graf
-// .append("svg") 
-// .classed("graf2", true) 
-// .attr("width", anchoTotalD) 
-// .attr("height", altoTotalD)
+// Se establecen y ajustan las dimensiones para el gráfico
+const anchoTotalOcupacion = +graf2.style("width").slice(0, -2)
+const altoTotalOcupacion = (anchoTotalOcupacion * 9) / 16
 
-// const dataset = await d3.csv("data.csv", d3.autoType)
-// }
+const anchoOcupacion = anchoTotalOcupacion - margenesOcupacion.right - margenesOcupacion.left
+const altoOcupacion = altoTotalOcupacion - margenesOcupacion.top - margenesOcupacion.bottom
 
-// draw("#graf2")
+const svgOcupacion = graf2
+    .append("svg")
+    .attr("width", anchoTotalOcupacion)
+    .attr("height", altoTotalOcupacion)
+    .attr("class", "graf")
 
-//----------------------------------------------------------------
-// const graf3 = d3.select("#graf2")
 
-// const marginsD = {
-//   top: 50,
-//   right: 20,
-//   bottom: 70,
-//   left: 105,
-// }
-// const anchoTotalD = +graf3.style("width").slice(0, -2)
-// const altoTotalD = (anchoTotalD * 9) / 16
 
-// const anchoD = anchoTotalD - marginsD.right - marginsD.left
-// const altoD = altoTotalD - marginsD.top - marginsD.bottom
+svgOcupacion
+    .append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", anchoOcupacion)
+    .attr("height", altoOcupacion)
+    .attr("transform", `translate(${margenesOcupacion.left}, ${margenesOcupacion.top})`)
+    .classed("backdrop", true)
+    //    .attr("fill", function (d) { return color(d) })
+    .style("fill", "#AEB6BF");
 
-// const svg2 = graf3
-//   .append("svg")
-//   .attr("width", anchoTotalD)
-//   .attr("height", altoTotalD)
-//   .attr("class", "graf2")
+const gOcupacion = svgOcupacion
+    .append("g")
+    .attr("transform", `translate(${margenesOcupacion.left}, ${margenesOcupacion.top})`)
 
-// svg2
-//   .append("rect")
-//   .attr("x", 0)
-//   .attr("y", 0)
-//   .attr("width", anchoD)
-//   .attr("height", altoD)
-//   .attr("transform", `translate(${marginsD.left}, ${marginsD.top})`)
-//   .classed("backdrop", true)
-//   .style("fill", "#AEB6BF");
 
-// const g2 = svg2
-//   .append("g")
-//   .attr("transform", `translate(${marginsD.left}, ${marginsD.top})`)
 
-// const load2 = async () => {
-//   let data = await d3.csv("poblacion_española.csv", d3.autoType)
-//   //data.sort((a, b) => b.Poblacion - a.Poblacion)
+const load6 = async () => {
 
-//   // Accessor
-//   const xAccessor = (d) => d.Año
-//   const yAccessor = (d) => d.Poblacion
+    //Se carga la data correspondiente
+    let data = await d3.csv("ocupacion_en_españa.csv", d3.autoType)
 
-//   // Escaladores
-//   const tiendas = d3.map(data, (d) => d.Año)
-//   const x = d3
-//     .scaleBand()
-//     .domain(tiendas)
-//     .range([0, anchoD])
-//     .paddingOuter(0.2)
-//     .paddingInner(0.1)
-//   const y = d3
-//     .scaleLinear()
-//     .domain([0, d3.max(data, yAccessor)])
-//     .range([altoD, 0])
+    // Accessor
+    const xAccessor = (d) => d.Año
+    const yAccessor = (d) => d.Personas_ocupadas
 
-//   const rect = g2
-//     .selectAll("rect")
-//     .data(data)
-//     .enter()
-//     .append("rect")
-//     .attr("x", (d) => x(0))
-//     .attr("y", (d) => y(0))
-//     .transition()
-//     .duration(2000)
-//     .attr("x", (d) => x(xAccessor(d)))
-//     .attr("y", (d) => y(yAccessor(d)))
-//     .attr("width", x.bandwidth())
-//     .attr("height", (d) => altoD - y(yAccessor(d)))
-//     .style("fill", "#1B4F72");
+    // Escaladores
+    const tiendas = d3.map(data, (d) => d.Año)
+    const x = d3
+        .scaleBand()
+        .domain(tiendas)
+        .range([0, anchoOcupacion])
+        .paddingOuter(0.2)
+        .paddingInner(0.1)
+    const y = d3
+        .scaleLinear()
+        .domain([0, d3.max(data, yAccessor)])
+        .range([altoOcupacion, 0])
 
-//   g2.append("text")
-//     .attr("x", anchoD / 2)
-//     .attr("y", -10)
-//     .attr("text-anchor", "middle")
-//     .classed("titulo", true)
-//     .text("Variación absoluta de población")
+    const rect = gOcupacion
+        .selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("x", (d) => x(0))
+        .attr("y", (d) => y(0))
+        .transition()
+        .duration(2000)
+        .attr("x", (d) => x(xAccessor(d)))
+        .attr("y", (d) => y(yAccessor(d)))
+        .attr("width", x.bandwidth())
+        .attr("height", (d) => altoOcupacion - y(yAccessor(d)))
+        .style("fill", "#1B4F72");
+    //.attr("fill", function (d) { return color(d) })
 
-//   const xAxis = d3.axisBottom(x)
-//   const xAxisGroup = g2
-//     .append("g2")
-//     .attr("transform", `translate(0, ${altoD})`)
-//     .classed("axis", true)
-//     .call(xAxis)
-//   const yAxis = d3.axisLeft(y).ticks(10)
-//   const yAxisGroup = g2.append("g2").classed("axis", true).call(yAxis)
-// }
+    gOcupacion.append("text")
+        .attr("x", anchoOcupacion / 2)
+        .attr("y", -10)
+        .attr("text-anchor", "middle")
+        .classed("titulo", true)
+        .text("Ocupacion de población")
 
-// load2()
+
+    const xAxis = d3.axisBottom(x)
+    const xAxisGroup = gOcupacion
+        .append("g")
+        .attr("transform", `translate(0, ${altoOcupacion})`)
+        .classed("axis", true)
+        .call(xAxis)
+
+
+
+    const yAxis = d3.axisLeft(y).ticks(10)
+    const yAxisGroup = gOcupacion.append("g").classed("axis", true).call(yAxis)
+}
+
+load6()
+
